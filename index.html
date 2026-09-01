@@ -709,19 +709,54 @@
 
     <footer>
 
-        <p>
-            © 2026
-            <span class="purple">sahiltechii</span>
-            &nbsp; • &nbsp;
-            Built with
-            python
-            and
-            <span class="heart">♥</span>
-        </p>
+        <div class="footer-content">
 
-        <a href="#home" class="back-top">
-            ↑
-        </a>
+            <p>
+                © 2026
+                <span class="purple">sahiltechii</span>
+                • Built with
+                <span class="heart">♥</span>
+                and Python
+            </p>
+
+
+            <div class="visitor-stats">
+
+                <div class="visitor-stat">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                    <span>
+                        <strong id="totalVisitors">
+                            ...
+                        </strong>
+                        Total Visitors
+                    </span>
+
+                </div>
+
+
+                <div class="visitor-stat">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    <span>
+                        <strong id="todayVisitors">
+                            ...
+                        </strong>
+                        Today
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a href="#home" class="back-top">
+                ↑
+            </a>
+
+        </div>
 
     </footer>
 
@@ -820,7 +855,116 @@
 
         });
 
+        const SUPABASE_URL =
+            "https://iuggiaspqwayuytmrpup.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_rl1iujo28v90qKUsMtlfIA__bWJhqFB";
+
+
+
+
+
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        // ============================================
+        // GET / CREATE VISITOR ID
+        // ============================================
+
+        function getVisitorId() {
+
+            let visitorId =
+                localStorage.getItem("sahiltechii_visitor_id");
+
+
+            if (!visitorId) {
+
+                visitorId =
+                    crypto.randomUUID();
+
+                localStorage.setItem(
+                    "sahiltechii_visitor_id",
+                    visitorId
+                );
+
+            }
+
+            return visitorId;
+        }
+
+
+        // ============================================
+        // RECORD VISITOR
+        // ============================================
+
+        async function recordVisitor() {
+
+            const visitorId =
+                getVisitorId();
+
+
+            const { data, error } =
+                await supabaseClient
+                    .rpc(
+                        "record_visitor",
+                        {
+                            p_visitor_id: visitorId
+                        }
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Visitor counter error:",
+                    error
+                );
+
+                return;
+
+            }
+
+
+            console.log(
+                "Visitor statistics:",
+                data
+            );
+
+
+            // ----------------------------------------
+            // Display statistics
+            // ----------------------------------------
+
+            if (data) {
+
+                document.getElementById(
+                    "totalVisitors"
+                ).textContent =
+                    Number(data.total_visitors)
+                        .toLocaleString();
+
+
+                document.getElementById(
+                    "todayVisitors"
+                ).textContent =
+                    Number(data.today_visitors)
+                        .toLocaleString();
+
+            }
+
+        }
+
+
+        recordVisitor();
+
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </body>
 

@@ -1870,3 +1870,102 @@ body.light-mode .profile-ring img {
     }
 
 }
+
+/* ============================================
+   VISITOR COUNTER
+============================================ */
+
+.footer-content {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+}
+
+
+.visitor-stats {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    margin-left: 30px;
+
+}
+
+
+.visitor-stat {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #999daa;
+
+    font-size: 11px;
+
+}
+
+
+.visitor-stat i {
+
+    color: var(--purple);
+
+    font-size: 13px;
+
+}
+
+
+.visitor-stat strong {
+
+    color: var(--purple);
+
+    font-size: 12px;
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+    .footer-content {
+
+        flex-direction: column;
+
+        gap: 10px;
+
+        padding: 15px 0;
+
+    }
+
+
+    .visitor-stats {
+
+        margin-left: 0;
+
+        gap: 15px;
+
+    }
+
+
+    .back-top {
+
+        right: 0;
+
+        top: 15px;
+
+    }
+
+}
